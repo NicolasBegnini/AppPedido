@@ -1,6 +1,6 @@
 import React, {createContext, useReducer} from "react";
 
-import { initialState, ProductReducer } from "../../data/reducers/CartReducer";
+import { initialState, ProductReducer } from "../../data/reducers/ProductReducer";
 //import { initialState, ProductReducer } from "../../app/data/reducers/ProductReducer";
 
 export const ProductContext = createContext(initialState);

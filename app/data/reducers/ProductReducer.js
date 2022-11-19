@@ -17,8 +17,6 @@ export const ProductReducer = (store = initialState, action) => {
             
             return {...store, selectedProduct: action.value};
 
-        default:
-
-            return store;
+        default: return store;
     }
 }

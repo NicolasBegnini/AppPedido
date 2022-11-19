@@ -1,98 +1,52 @@
-import React from 'react';
-import { ScrollView } from 'react-native';
-import { Appbar, Button, Card, Paragraph } from 'react-native-paper';
-
+import React, {useContext, useEffect} from 'react';
+import {ScrollView} from 'react-native';
+import {Appbar, Button, Card, Paragraph} from 'react-native-paper';
 import styled from 'styled-components/native';
+import {ProductContext} from '../../providers/ProductProvider';
+import {ApiService} from '../../../data/services/ApiServices';
+import {productResponse} from '../../../data/actions/ProductActions';
 
 const ViewContainer = styled.SafeAreaView`
-    flex: 1;
+  flex: 1;
 `;
 
 const ProductCard = styled(Card)`
-
-    margin:7px;
-
+  margin: 5px;
 `;
 
 export default function ProductsView(props) {
+  const [{productList, selectedProduct}, productDispath] =
+    useContext(ProductContext);
 
-    return (
-        <ViewContainer>
+  useEffect(() => {
+    ApiService.get('product').then(productList =>
+      productDispath(productResponse(productList)),
+    );
+  });
 
-            <Appbar.Header>
-                <Appbar.Content title={'Sorveteria'}/>
+  return (
+    <ViewContainer>
+      <Appbar.Header>
+        <Appbar.Content title={'Tapiocaria'} />
+      </Appbar.Header>
+      <ScrollView>
+        {productList.map(item => (
+          <ProductCard key={item.id}>
+            <Card>
+              <Card.Cover source={{uri: item.picture}}></Card.Cover>
 
-            </Appbar.Header>
-            <ScrollView>
-                <ProductCard>
+              <Card.Title
+                title={item.name}
+                right={props => <Button>Selecionar</Button>}
+              />
 
-                <Card>
-
-                    <Card.Cover 
-
-source={{uri:'https://polosulsc.com.br/wp-content/webp-express/webp-images/uploads/2018/03/Tr%C3%AAs-tipos-e-sabores-de-sorvete-diferentes-1.jpg.webp'}}
-
-></Card.Cover>
-
-                    <Card.Title
-                        title={'Sorvetes'}
-                        right={(props) => <Button>Selecionar</Button>}
-                        />
-
-                    <Card.Content>
-                        <Paragraph>R$ 10,00</Paragraph>
-                    </Card.Content>
-
-                </Card>
-                        </ProductCard>
-                
-                <ProductCard>
-
-
-                <Card>
-                    <Card.Cover 
-
-source={{uri:'https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/MU3RGOXROII6ZLAWR67XDFGNPA.jpg'}}
-
-></Card.Cover>
-
-                    <Card.Title
-                        title={'Sundae'}
-                        right={(props) => <Button>Selecionar</Button>}
-                        />
-
-                    <Card.Content>
-                        <Paragraph>R$ 15,00</Paragraph>
-                    </Card.Content>
-
-                </Card>
-                        </ProductCard>
-                <ProductCard>
-
-
-                <Card>
-                    <Card.Cover 
-
-source={{uri:'https://www.selecoes.com.br/wp-content/uploads/2021/08/milk-shake-id1311373994-750x420.jpg'}}
-
-></Card.Cover>
-
-                    <Card.Title
-                        title={'Milk Shake'}
-                        right={(props) => <Button>Selecionar</Button>}
-                        />
-
-                    <Card.Content>
-                        <Paragraph>R$ 20,00</Paragraph>
-                    </Card.Content>
-
-                </Card>
-
-                        </ProductCard>
-            </ScrollView>
-
-        </ViewContainer>
-
-    )
+              <Card.Content>
+                <Paragraph>R$ 8,00</Paragraph>
+              </Card.Content>
+            </Card>
+          </ProductCard>
+        ))}
+      </ScrollView>
+    </ViewContainer>
+  );
 }
-

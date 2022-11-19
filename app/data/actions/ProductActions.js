@@ -9,7 +9,7 @@ export const productRequest = () => ({
     
 })
 
-export const productsResponse = (value) => ({
+export const productResponse = (value) => ({
 
     type: PRODUCTS_RESPONSE,
     value
