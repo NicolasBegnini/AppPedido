@@ -5,6 +5,8 @@ import styled from 'styled-components/native';
 import {ProductContext} from '../../providers/ProductProvider';
 import {ApiService} from '../../../data/services/ApiServices';
 import {productResponse} from '../../../data/actions/ProductActions';
+import { NumberServices } from '../../../data/services/NumberServices';
+
 
 const ViewContainer = styled.SafeAreaView`
   flex: 1;
@@ -41,7 +43,7 @@ export default function ProductsView(props) {
               />
 
               <Card.Content>
-                <Paragraph>R$ 8,00</Paragraph>
+                <Paragraph>{NumberServices.currency(item.price)}</Paragraph>
               </Card.Content>
             </Card>
           </ProductCard>
